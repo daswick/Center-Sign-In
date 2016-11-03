@@ -97,19 +97,13 @@ public class CenterGUI extends JPanel
 			err1.setText("");
 			err2.setText("");
 			String n = name.getText();
-			String e = email.getText();
-			if(n.isEmpty() && e.isEmpty())
+			String e = email.getText();			
+			if(n.isEmpty() || e.isEmpty())
 			{
-				err1.setText("This field is required.");
-				err2.setText("This field is required.");				
-			}
-			else if(n.isEmpty())
-			{
-				err1.setText("This field is required");
-			}
-			else if(e.isEmpty())
-			{
-				err2.setText("This field is required");
+				if(n.isEmpty())
+					err1.setText("This field is required.");
+				if(e.isEmpty())
+					err2.setText("This field is required.");									
 			}
 			else
 			{
