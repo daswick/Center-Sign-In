@@ -19,8 +19,7 @@ public class CenterGUI extends JPanel
 	
 	public void initFile() throws IOException
 	{
-		SimpleDateFormat dateFormat = new SimpleDateFormat("MM.dd.yyyy");
-		File file = new File(dateFormat.format(date) + ".txt");
+		File file = new File(new SimpleDateFormat("MM.dd.yyyy").format(date) + ".txt");		
 		if(!file.exists())
 		{
 			file.createNewFile();
@@ -29,9 +28,7 @@ public class CenterGUI extends JPanel
 			out.flush();
 		}
 		else
-		{
 			out = new BufferedWriter(new FileWriter(file, true));
-		}	
 	}
 		
 	public CenterGUI()
@@ -39,6 +36,7 @@ public class CenterGUI extends JPanel
 		try {
 			initFile();
 		} catch ( IOException e ) {}
+		
 		JPanel panel = new JPanel();
 		panel.setBorder(new EmptyBorder(0, 10, 10, 10));
 		panel.setPreferredSize(new Dimension(450, 250));
@@ -98,16 +96,17 @@ public class CenterGUI extends JPanel
 			err2.setText("");
 			String n = name.getText();
 			String e = email.getText();
+
+			if(!e.contains("@") || (!e.endsWith(".com") && !e.endsWith(".org") && !e.endsWith(".edu") && !e.endsWith(".gov") && !e.endsWith(".net")))
+				err2.setText("Invalid email.");
 			
-			if(n.isEmpty() || e.isEmpty())
+			if(n.isEmpty() || e.isEmpty() || err2.getText() == "Invalid email.")
 			{
 				if(n.isEmpty())
 					err1.setText("This field is required.");
 				if(e.isEmpty())
 					err2.setText("This field is required.");
 			}
-			else if(!e.contains("@") || (!e.endsWith(".com") && !e.endsWith(".org") && !e.endsWith(".edu") && !e.endsWith(".gov") && !e.endsWith(".net")))
-				err2.setText("Invalid email.");
 			else
 			{
 				try {
@@ -119,6 +118,7 @@ public class CenterGUI extends JPanel
 				} catch (IOException e1) {}
 				name.setText("");
 				email.setText("");
+				name.requestFocus();
 			}
 		}
 
